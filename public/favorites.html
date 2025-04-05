@@ -1,0 +1,37 @@
+<!-- public/favorites.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Favorites</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Your Favorite Recipes</h2>
+    <div id="favorites-list"></div>
+    <a href="/dashboard.html">Back to Dashboard</a>
+  </div>
+
+  <script>
+    async function loadFavorites() {
+      const res = await fetch("/favorites");
+      const favorites = await res.json();
+
+      const container = document.getElementById("favorites-list");
+      container.innerHTML = "";
+
+      favorites.forEach(recipe => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <img src="${recipe.image}" width="200"/>
+          <h3>${recipe.title}</h3>
+          <p>${recipe.instructions}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    loadFavorites();
+  </script>
+</body>
+</html>
